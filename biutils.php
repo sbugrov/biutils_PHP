@@ -1,6 +1,6 @@
 <?php
 
-function composition($k, $text){
+function kmers($k, $text){
   /* Solve the String Composition Problem.
   Inputs: 
   k: A length of k-mers, an integer
