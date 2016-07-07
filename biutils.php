@@ -17,7 +17,6 @@ function kmers($k, $text){
   asort($kmers);
   
   return $kmers;
-
 }
 
 function genome_path($path){
@@ -32,11 +31,29 @@ function genome_path($path){
   foreach ($path as &$value) {
     array_push($new_path,substr($value,0,1));
   }
-
   $new_path = implode('',$new_path);
   $new_path .= substr(end($path),1,strlen(end($path))-1);
   
   return $new_path;
+}
+
+function linearSpectrum($peptide) {
+  $amino_acid_mass = array( 'G' => 57,  'A' => 71,  'S' => 87,  'P' => 97, 'V' => 99,  'T' => 101, 'C' => 103, 'I' => 113, 'L' => 113, 'N' => 114, 'D' => 115, 'K' => 128, 'Q' => 128, 'E' => 129,'M' => 131, 'H' => 137, 'F' => 147, 'R' => 156, 'Y' => 163, 'W' => 186 );
+  $prefix_mass = array(0);
+  
+  for ($i = 1; $i <= strlen($peptide); $i++){
+    array_push($prefix_mass, $prefix_mass[$i-1] + $amino_acid_mass[$peptide[$i-1]]);
+  }
+  
+  for ($i = 1; $i <= strlen($peptide); $i++){
+    for ($j = $i + 1; $j <= strlen($peptide); $j++){
+      array_push($prefix_mass, $prefix_mass[$j] - $prefix_mass[$i]);
+    }
+  }
+  
+  asort($prefix_mass);
+  
+  return $prefix_mass;
 }
 
 ?>
