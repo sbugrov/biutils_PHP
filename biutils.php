@@ -56,4 +56,25 @@ function linearSpectrum($peptide) {
   return $prefix_mass;
 }
 
+function buildDeBruijnGraph($edges) {
+  $ins = array();
+  
+  foreach ($edges as $edge) {
+    array_push($ins, substr($edge,0,strlen($edge)-1));
+  }
+  
+  $unque_ins = array_unique($ins);
+  $de_bruijn_graph = array();
+  
+  foreach ($unque_ins as $unque_in) {
+    foreach ($edges as $edge) {
+      if (substr($edge,0,strlen($edge)-1) == $unque_in) {
+        $de_bruijn_graph[$unque_in] = substr($edge,1,strlen($edge));
+      }
+    }
+  }
+  
+  return $de_bruijn_graph;
+}
+
 ?>
